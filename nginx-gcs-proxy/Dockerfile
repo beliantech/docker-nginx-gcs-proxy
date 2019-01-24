@@ -9,7 +9,7 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
     && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 COPY nginx.conf.tmpl /etc/nginx/nginx.conf.tmpl
 
-ENV GCS_BUCKET_URL " "
+ENV GCS_BUCKET " "
 ENV LISTEN_PORT "8080"
 ENV NOT_FOUND_MEANS_INDEX "false"
 

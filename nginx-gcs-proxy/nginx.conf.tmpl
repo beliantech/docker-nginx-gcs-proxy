@@ -93,7 +93,7 @@ http {
         {{ if eq .Env.NOT_FOUND_MEANS_INDEX "true" }}
             error_page              404 =200 /index.html;
         {{ end }}
-            proxy_pass              http://google-cloud-storage/{{ .Env.GCS_BUCKET_URL }}$uri;
+            proxy_pass              http://google-cloud-storage/{{ .Env.GCS_BUCKET }}$uri;
         }
     }
 }
