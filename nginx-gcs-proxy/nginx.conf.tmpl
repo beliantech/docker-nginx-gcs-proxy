@@ -105,8 +105,9 @@ http {
             error_page              404 =200 /index.html;
             {{ end }}
 
-            {{ if eq .Env.PUBLIC_CACHE "true" }}
-            expires {{ .Env.PUBLIC_CACHE_DURATION }};
+            {{ if ne .Env.CACHE_CONTROL "none" }}
+            expires {{ .Env.CACHE_CONTROL_DURATION }};
+            add_header Cache-Control "{{ .Env.CACHE_CONTROL }}";
             {{ end }}
 
             proxy_pass              https://google-cloud-storage/{{ .Env.GCS_BUCKET }}$uri;
