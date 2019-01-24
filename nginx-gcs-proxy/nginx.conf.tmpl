@@ -17,7 +17,13 @@ http {
                       '$status $body_bytes_sent "$http_referer" '
                       '"$http_user_agent" "$http_x_forwarded_for"';
     access_log        /var/log/nginx/access.log  main;
+
     server_tokens     off;
+
+    sendfile        on;
+
+    keepalive_timeout  65;
+
     gzip              on;
     gzip_disable      "msie6";
     gzip_comp_level   6;
@@ -102,7 +108,7 @@ http {
             expires {{ .Env.PUBLIC_CACHE_DURATION }};
             {{ end }}
 
-            proxy_pass              http://google-cloud-storage/{{ .Env.GCS_BUCKET }}$uri;
+            proxy_pass              https://google-cloud-storage/{{ .Env.GCS_BUCKET }}$uri;
         }
     }
 }
