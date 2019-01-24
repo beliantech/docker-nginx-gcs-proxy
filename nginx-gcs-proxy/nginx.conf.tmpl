@@ -36,10 +36,6 @@ http {
         application/xml
         application/xml+rss;
 
-    {{ if eq .Env.PROXY_CACHE "true" }}
-    proxy_cache_path  /var/cache/nginx keys_zone=google-cloud-storage:10m inactive={{ .Env.PROXY_CACHE_DURATION }};
-    {{ end }}
-
     resolver          8.8.8.8 valid=300s ipv6=off;
     resolver_timeout  10s;
 
@@ -89,10 +85,14 @@ http {
             proxy_pass_request_body off;
 
             proxy_ignore_headers    Expires Cache-Control;
+
+            {{ if eq .Env.PROXY_CACHE "true" }}
+            proxy_cache_path  /var/cache/nginx keys_zone=google-cloud-storage:10m inactive={{ .Env.PROXY_CACHE_DURATION }};
             proxy_cache             google-cloud-storage;
             proxy_cache_key         "$host/$proxy_host$uri";
             proxy_cache_valid       200 1d;
             add_header              X-Cache $upstream_cache_status;
+            {{ end }}
 
             {{ if eq .Env.REDIRECT_404_TO_INDEX "true" }}
             error_page              404 =200 /index.html;
