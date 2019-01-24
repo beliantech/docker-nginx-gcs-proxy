@@ -99,7 +99,7 @@ http {
             {{ end }}
 
             {{ if eq .Env.PUBLIC_CACHE "true" }}
-            expires {{ .Env.PUBLIC_CACHE_DURATION }}
+            expires {{ .Env.PUBLIC_CACHE_DURATION }};
             {{ end }}
 
             proxy_pass              http://google-cloud-storage/{{ .Env.GCS_BUCKET }}$uri;
