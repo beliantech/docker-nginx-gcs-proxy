@@ -90,7 +90,7 @@ http {
             proxy_cache_valid       200 1d;
             add_header              X-Cache $upstream_cache_status;
 
-        {{ if eq .Env.NOT_FOUND_MEANS_INDEX "true" }}
+        {{ if eq .Env.REDIRECT_404_TO_INDEX "true" }}
             error_page              404 =200 /index.html;
         {{ end }}
             proxy_pass              http://google-cloud-storage/{{ .Env.GCS_BUCKET }}$uri;

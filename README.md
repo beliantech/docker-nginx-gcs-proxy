@@ -19,7 +19,7 @@ Variable | Description | Default
 --- | --- | ---
 `GCS_BUCKET` | Full URL to the bucket folder. `https://storage.googleapis.com/[GCS_BUCKET]/index.html` | None - required!
 `LISTEN_PORT` | Server listen port | 8080
-`NOT_FOUND_MEANS_INDEX` | When requested path is not found in the bucket, return index.html. Useful when serving single page apps, like Angular, React, Ember. Possible values: "true", "false". | false
+`REDIRECT_404_TO_INDEX` | When requested path is not found in the bucket, return index.html. Useful when serving single page apps, like Angular, React, Ember. Possible values: "true", "false". | false
 
 ## Health-checking
 
