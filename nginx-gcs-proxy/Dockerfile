@@ -11,7 +11,10 @@ COPY nginx.conf.tmpl /etc/nginx/nginx.conf.tmpl
 
 ENV GCS_BUCKET " "
 ENV LISTEN_PORT "8080"
+
 ENV REDIRECT_404_TO_INDEX "false"
+ENV PROXY_CACHE "false"
+ENV PROXY_CACHE_DURATION "30m"
 
 ENTRYPOINT ["dockerize", \
             "-template", \
