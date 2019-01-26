@@ -93,7 +93,7 @@ http {
             proxy_method            GET;
             proxy_pass_request_body off;
 
-            proxy_ignore_headers    Expires Cache-Control;
+            proxy_ignore_headers    "Expires" "Cache-Control";
 
             {{ if eq .Env.PROXY_CACHE "true" }}
             proxy_cache_path  /var/cache/nginx keys_zone=google-cloud-storage:10m inactive={{ .Env.PROXY_CACHE_DURATION }};
@@ -109,7 +109,7 @@ http {
 
             {{ if ne .Env.CACHE_CONTROL "none" }}
             expires {{ .Env.CACHE_CONTROL_DURATION }};
-            add_header Cache-Control "{{ .Env.CACHE_CONTROL }}";
+            # add_header Cache-Control "{{ .Env.CACHE_CONTROL }}";
             {{ end }}
 
             proxy_pass              https://storage.googleapis.com/{{ .Env.GCS_BUCKET }}$uri;
