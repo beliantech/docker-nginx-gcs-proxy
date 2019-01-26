@@ -46,7 +46,7 @@ http {
     resolver_timeout  10s;
 
     upstream google-cloud-storage {
-       server          storage.googleapis.com:443;
+       server          storage.googleapis.com;
        keepalive       128;
     }
 
