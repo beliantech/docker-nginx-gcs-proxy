@@ -96,10 +96,10 @@ http {
             proxy_ignore_headers    "Expires" "Cache-Control";
 
             {{ if eq .Env.PROXY_CACHE "true" }}
-            proxy_cache_path  /var/cache/nginx keys_zone=google-cloud-storage:10m inactive={{ .Env.PROXY_CACHE_DURATION }};
+            proxy_cache_path  /var/cache/nginx keys_zone=google-cloud-storage:10m inactive=2h;
             proxy_cache             google-cloud-storage;
             proxy_cache_key         "$host/$proxy_host$uri";
-            proxy_cache_valid       200 1d;
+            proxy_cache_valid       200 {{ .Env.PROXY_CACHE_DURATION }};
             add_header              X-Cache $upstream_cache_status;
             {{ end }}
 
