@@ -45,10 +45,10 @@ http {
     resolver          8.8.8.8 valid=300s ipv6=off;
     resolver_timeout  10s;
 
-    upstream google-cloud-storage {
-       server          storage.googleapis.com;
-       keepalive       128;
-    }
+    # upstream google-cloud-storage {
+    #    server          storage.googleapis.com;
+    #    keepalive       128;
+    # }
 
     server {
         listen          {{ .Env.LISTEN_PORT }};
@@ -110,7 +110,7 @@ http {
             add_header Cache-Control "{{ .Env.CACHE_CONTROL }}";
             {{ end }}
 
-            proxy_pass              http://google-cloud-storage/{{ .Env.GCS_BUCKET }}$uri;
+            proxy_pass              https://storage.googleapis.com/{{ .Env.GCS_BUCKET }}$uri;
         }
     }
 }
