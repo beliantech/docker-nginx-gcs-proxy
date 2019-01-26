@@ -53,6 +53,8 @@ http {
     server {
         listen          {{ .Env.LISTEN_PORT }};
 
+        recursive_error_pages on;
+
         if ( $request_method !~ "GET|HEAD" ) {
             return 405;
         }
