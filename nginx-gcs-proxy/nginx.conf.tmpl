@@ -102,7 +102,7 @@ http {
             {{ end }}
 
             {{ if eq .Env.REDIRECT_404_TO_INDEX "true" }}
-            error_page              404 500 502 503 504 =200 /index.html;
+            error_page              404 =200 /index.html;
             {{ end }}
 
             {{ if ne .Env.CACHE_CONTROL "none" }}
