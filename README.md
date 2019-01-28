@@ -5,6 +5,14 @@ A Docker image for running Nginx as a proxy for Google Cloud Storage, with cachi
 
 No public image available at the moment. Fork away!
 
+To run locally:
+```bash
+docker build -t gcs-spa-proxy .
+docker run --rm -e "GCS_BUCKET=gcs-bucket-name" -e "REDIRECT_404_TO_INDEX=true" -p 9191:8080 --expose 8080 gcs-spa-proxy
+```
+
+NGINX is then accessible via localhost:9191
+
 ## Configuration
 
 The following tables lists the configurable environment variables of nginx-gcs-proxy and their default values.
