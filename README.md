@@ -64,3 +64,9 @@ docker build gcs-spa-proxy
 ```bash
 docker run --rm -e GCS_BUCKET="dummy" gcs-spa-proxy nginx -t
 ```
+
+## Known issues
+
+https://serverfault.com/questions/951049/nginx-proxy-to-gcs-bucket-with-redirect-all-urls-to-index-html-getting-200-blan
+
+Workaround: Set `PROXY_CACHE=true`

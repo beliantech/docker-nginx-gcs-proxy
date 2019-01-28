@@ -20,7 +20,7 @@ http {
 
     server_tokens     off;
 
-    # sendfile        on;
+    sendfile        on;
 
     keepalive_timeout  65;
 
@@ -45,10 +45,17 @@ http {
     resolver          8.8.8.8 valid=300s ipv6=off;
     resolver_timeout  10s;
 
-    # upstream google-cloud-storage {
-    #    server          storage.googleapis.com;
-    #    keepalive       128;
-    # }
+    upstream gcs {
+       server          storage.googleapis.com:443;
+       keepalive       128;
+    }
+
+    {{ if eq .Env.PROXY_CACHE "true" }}
+    proxy_cache_path      /var/cache/nginx keys_zone=google-cloud-storage:10m inactive=1h;
+    proxy_cache           google-cloud-storage;
+    proxy_cache_key       "$host/$proxy_host$uri";
+    proxy_cache_valid     200 {{ .Env.PROXY_CACHE_DURATION }};
+    {{ end }}
 
     server {
         listen          {{ .Env.LISTEN_PORT }};
@@ -96,10 +103,6 @@ http {
             proxy_ignore_headers    "Expires" "Cache-Control";
 
             {{ if eq .Env.PROXY_CACHE "true" }}
-            proxy_cache_path  /var/cache/nginx keys_zone=google-cloud-storage:10m inactive=2h;
-            proxy_cache             google-cloud-storage;
-            proxy_cache_key         "$host/$proxy_host$uri";
-            proxy_cache_valid       200 {{ .Env.PROXY_CACHE_DURATION }};
             add_header              X-Cache $upstream_cache_status;
             {{ end }}
 
@@ -109,10 +112,10 @@ http {
 
             {{ if ne .Env.CACHE_CONTROL "none" }}
             expires {{ .Env.CACHE_CONTROL_DURATION }};
-            # add_header Cache-Control "{{ .Env.CACHE_CONTROL }}";
+            add_header Cache-Control "{{ .Env.CACHE_CONTROL }}";
             {{ end }}
 
-            proxy_pass              https://storage.googleapis.com/{{ .Env.GCS_BUCKET }}$uri;
+            proxy_pass              https://gcs/{{ .Env.GCS_BUCKET }}$uri;
         }
     }
 }
