@@ -24,7 +24,7 @@ Variable | Description | Default
 `REDIRECT_404_TO_INDEX` | When requested path is not found in the bucket, return index.html. Useful when serving single page apps, like Angular, React, Ember. Possible values: "true", "false". | "false"
 `PROXY_CACHE` | If true, enables NGINX proxy caching. | "false"
 `PROXY_CACHE_DURATION` | Configures the NGINX proxy cache duration. | "30m"
-`CACHE_CONTROL` | Configures Cache-Control caching (e.g. Cache-Control: private, max-age=PUBLIC_CACHE_DURATION). Set to "none" to disable. | "private"
+`CACHE_CONTROL` | Configures Cache-Control: "private", "public". Set to "none" to disable, defaulting to bucket object metadata. | "none"
 `CACHE_CONTROL_DURATION` | If present, configures the Cache-Control headers to this duration. | "1h"
 `CORS` | If true, enables CORS. | "false"
 `CORS_ALLOWED_ORIGINS` | Configures the list of allowerd origins | "*"
