@@ -20,6 +20,9 @@ ENV PROXY_CACHE_DURATION "30m"
 ENV CACHE_CONTROL "private"
 ENV CACHE_CONTROL_DURATION "1h"
 
+ENV CORS "false"
+ENV CORS_ALLOWED_ORIGINS "*"
+
 ENTRYPOINT ["dockerize", \
             "-template", \
             "/etc/nginx/nginx.conf.tmpl:/etc/nginx/nginx.conf"]

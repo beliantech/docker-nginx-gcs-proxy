@@ -66,6 +66,18 @@ http {
             return 405;
         }
 
+        {{ if eq .Env.CORS "true" }}
+        if ( $request_method ~* "(GET|HEAD)" ) {
+            add_header "Access-Control-Allow-Origin"  {{ .Env.CORS_ALLOWED_ORIGINS }};
+        }
+        if ( $request_method = OPTIONS ) {
+            add_header "Access-Control-Allow-Origin"  {{ .Env.CORS_ALLOWED_ORIGINS }};
+            add_header "Access-Control-Allow-Methods" "GET, OPTIONS, HEAD";
+            add_header "Access-Control-Allow-Headers" "Authorization, Origin, X-Requested-With, Content-Type, Accept";
+            return 200;
+        }
+        {{ end }}
+
         location = / {
             rewrite ^.*$ /index.html last;
         }

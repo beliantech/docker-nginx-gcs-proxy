@@ -26,6 +26,8 @@ Variable | Description | Default
 `PROXY_CACHE_DURATION` | Configures the NGINX proxy cache duration. | "30m"
 `CACHE_CONTROL` | Configures Cache-Control caching (e.g. Cache-Control: private, max-age=PUBLIC_CACHE_DURATION). Set to "none" to disable. | "private"
 `CACHE_CONTROL_DURATION` | If present, configures the Cache-Control headers to this duration. | "1h"
+`CORS` | If true, enables CORS. | "false"
+`CORS_ALLOWED_ORIGINS` | Configures the list of allowerd origins | "*"
 
 ## Health-checking
 
