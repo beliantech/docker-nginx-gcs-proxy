@@ -105,14 +105,11 @@ http {
             proxy_hide_header       alternate-protocol;
             proxy_hide_header       Set-Cookie;
             proxy_hide_header       Expires;
-            proxy_hide_header       Cache-Control;
             proxy_ignore_headers    Set-Cookie;
             proxy_http_version      1.1;
             proxy_intercept_errors  on;
             proxy_method            GET;
             proxy_pass_request_body off;
-
-            proxy_ignore_headers    "Expires" "Cache-Control";
 
             {{ if eq .Env.PROXY_CACHE "true" }}
             add_header              X-Cache $upstream_cache_status;
@@ -123,6 +120,8 @@ http {
             {{ end }}
 
             {{ if ne .Env.CACHE_CONTROL "none" }}
+            proxy_hide_header       Cache-Control;
+            proxy_ignore_headers    "Expires" "Cache-Control";
             expires {{ .Env.CACHE_CONTROL_DURATION }};
             add_header Cache-Control "{{ .Env.CACHE_CONTROL }}";
             {{ end }}
