@@ -126,7 +126,7 @@ http {
             add_header Cache-Control "{{ .Env.CACHE_CONTROL }}";
             {{ end }}
 
-            proxy_pass              https://gcs/{{ .Env.GCS_BUCKET }}$uri;
+            proxy_pass              https://gcs/{{ .Env.GCS_BUCKET }}{{ .Env.OBJECT_PREFIX }}$uri;
         }
     }
 }

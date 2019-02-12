@@ -22,6 +22,7 @@ Variable | Description | Default
 `GCS_BUCKET` | Full URL to the bucket folder. `https://storage.googleapis.com/[GCS_BUCKET]/index.html` | None - required!
 `LISTEN_PORT` | Server listen port | 8080
 `REDIRECT_404_TO_INDEX` | When requested path is not found in the bucket, return index.html. Useful when serving single page apps, like Angular, React, Ember. Possible values: "true", "false". | "false"
+`OBJECT_PREFIX` | If set, will look for objects in `<GCS_BUCKET>${OBJECT_PREFIX}`. e.g. `OBJECT_PREFIX=/path` will look for objects in `<GCS_BUCKET>/path` | ""
 `PROXY_CACHE` | If true, enables NGINX proxy caching. | "false"
 `PROXY_CACHE_DURATION` | Configures the NGINX proxy cache duration. | "30m"
 `CACHE_CONTROL` | Configures Cache-Control: "private", "public". Set to "none" to disable, defaulting to bucket object metadata. | "none"
