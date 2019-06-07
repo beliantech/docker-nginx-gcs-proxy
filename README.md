@@ -30,6 +30,7 @@ Variable | Description | Default
 `CACHE_CONTROL_DURATION` | If present, configures the Cache-Control headers to this duration. | "1h"
 `CORS` | If true, enables CORS. | "false"
 `CORS_ALLOWED_ORIGINS` | Configures the list of allowerd origins | "*"
+`SERVICE_WORKER_FILENAME` | Configures the service worker filename, which should not be cached ever. It should be regex-escaped. | "sw\.js"
 
 ## Health-checking
 

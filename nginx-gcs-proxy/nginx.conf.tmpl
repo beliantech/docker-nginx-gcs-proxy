@@ -76,6 +76,10 @@ http {
             return 200;
         }
 
+        location ~ {{ .Env.SERVICE_WORKER_FILENAME }}; {
+            expires off;
+        }
+
         location / {
             {{ if eq .Env.CORS "true" }}
             if ( $request_method ~* "(GET|HEAD)" ) {
