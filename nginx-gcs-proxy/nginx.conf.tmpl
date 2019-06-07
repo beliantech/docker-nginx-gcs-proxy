@@ -77,8 +77,10 @@ http {
         }
 
         location ~ {{ .Env.SERVICE_WORKER_FILENAME }} {
-            proxy_pass              https://gcs/{{ .Env.GCS_BUCKET }}{{ .Env.OBJECT_PREFIX }}$uri;
             expires off;
+            add_header 'Cache-Control' 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0';
+            proxy_no_cache "1";
+            proxy_pass              https://gcs/{{ .Env.GCS_BUCKET }}{{ .Env.OBJECT_PREFIX }}$uri;
         }
 
         location / {
