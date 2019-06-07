@@ -76,7 +76,7 @@ http {
             return 200;
         }
 
-        location ~ {{ .Env.SERVICE_WORKER_FILENAME }}; {
+        location ~ {{ .Env.SERVICE_WORKER_FILENAME }} {
             expires off;
         }
 
