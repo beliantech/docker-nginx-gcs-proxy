@@ -25,6 +25,7 @@ Variable | Description | Default
 `OBJECT_PREFIX` | If set, will look for objects in `<GCS_BUCKET>${OBJECT_PREFIX}`. e.g. `OBJECT_PREFIX=/path` will look for objects in `<GCS_BUCKET>/path` | ""
 `PROXY_CACHE` | If true, enables NGINX proxy caching. | "false"
 `PROXY_CACHE_DURATION` | Configures the NGINX proxy cache duration. | "30m"
+`PROXY_CACHE_INACTIVE` | Configures the NGINX proxy cache inactive duration. | "1h"
 `CACHE_CONTROL` | Configures Cache-Control: "private", "public". Set to "none" to disable, defaulting to bucket object metadata. | "none"
 `CACHE_CONTROL_DURATION` | If present, configures the Cache-Control headers to this duration. | "1h"
 `CORS` | If true, enables CORS. | "false"
