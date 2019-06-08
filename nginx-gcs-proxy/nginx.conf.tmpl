@@ -53,8 +53,9 @@ http {
     {{ if eq .Env.PROXY_CACHE "true" }}
     proxy_cache_path      /var/cache/nginx keys_zone=google-cloud-storage:10m inactive={{ .Env.PROXY_CACHE_INACTIVE }};
     proxy_cache_key       "$host/$proxy_host$uri";
-    proxy_cache_valid     200 {{ .Env.PROXY_CACHE_DURATION }};
+    proxy_cache_valid     200 1m; # required otherwise index.html rewrites gives empty file...
     proxy_cache_valid     404 1m;
+    proxy_cache           google-cloud-storage;
     {{ end }}
 
     server {
@@ -139,7 +140,7 @@ http {
             # Proxy cache only files with asset hash
             location ~ "^/.+\.[a-zA-Z0-9]{6,32}\..*" {
                 {{ if eq .Env.PROXY_CACHE "true" }}
-                proxy_cache           google-cloud-storage;
+                proxy_cache_valid     200 {{ .Env.PROXY_CACHE_DURATION }};
                 {{ end }}
                 proxy_pass              https://gcs/{{ .Env.GCS_BUCKET }}{{ .Env.OBJECT_PREFIX }}$uri;
             }
