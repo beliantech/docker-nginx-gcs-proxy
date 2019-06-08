@@ -128,8 +128,8 @@ http {
 
             proxy_pass              https://gcs/{{ .Env.GCS_BUCKET }}{{ .Env.OBJECT_PREFIX }}$uri;
 
-            # Skip all caches for service worker file and index file
-            location ~ ^/({{ .Env.SERVICE_WORKER_FILENAME }}|index\.html) {
+            # Skip all caches for service worker file
+            location ~ ^/{{ .Env.SERVICE_WORKER_FILENAME }} {
                 expires off;
                 add_header 'Cache-Control' 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0';
                 proxy_no_cache         "1";
