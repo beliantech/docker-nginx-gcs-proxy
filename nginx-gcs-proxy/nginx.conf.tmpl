@@ -103,8 +103,6 @@ http {
             add_header Cache-Control "{{ .Env.CACHE_CONTROL }}";
             {{ end }}
 
-            proxy_pass              https://gcs/{{ .Env.GCS_BUCKET }}{{ .Env.OBJECT_PREFIX }}$uri;
-
             proxy_set_header        Host storage.googleapis.com;
             proxy_set_header        Cookie "";
             proxy_set_header        Authorization "";
@@ -128,16 +126,22 @@ http {
             proxy_method            GET;
             proxy_pass_request_body off;
 
+            proxy_pass              https://gcs/{{ .Env.GCS_BUCKET }}{{ .Env.OBJECT_PREFIX }}$uri;
+
+            # Skip all caches for service worker file and index file
             location ~ ^/({{ .Env.SERVICE_WORKER_FILENAME }}|index\.html) {
                 expires off;
                 add_header 'Cache-Control' 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0';
                 proxy_no_cache         "1";
+                proxy_pass              https://gcs/{{ .Env.GCS_BUCKET }}{{ .Env.OBJECT_PREFIX }}$uri;
             }
 
+            # Proxy cache only files with asset hash
             location ~ "^/.+\.[a-zA-Z0-9]{6,32}\..*" {
                 {{ if eq .Env.PROXY_CACHE "true" }}
                 proxy_cache           google-cloud-storage;
                 {{ end }}
+                proxy_pass              https://gcs/{{ .Env.GCS_BUCKET }}{{ .Env.OBJECT_PREFIX }}$uri;
             }
         }
     }
