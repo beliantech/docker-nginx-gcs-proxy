@@ -131,11 +131,16 @@ http {
             location ~ ^/({{ .Env.SERVICE_WORKER_FILENAME }}|index\.html) {
                 expires off;
                 add_header 'Cache-Control' 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0';
+
+                {{ if eq .Env.PROXY_CACHE "true" }}
                 proxy_cache off;
+                {{ end }}
             }
 
-            location ~ ^/.+\.[a-zA-Z0-9]{6,32}\..* {
+            location ~ "^/.+\.[a-zA-Z0-9]{6,32}\..*" {
+                {{ if eq .Env.PROXY_CACHE "true" }}
                 proxy_cache           google-cloud-storage;
+                {{ end }}
             }
         }
     }
